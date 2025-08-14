@@ -1,0 +1,29 @@
+{
+  "name": "node_first_project",
+  "version": "1.0.0",
+  "description": "API для учебного проекта",
+  "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node ./dist/main.js",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/owokequ/nodeJS-first-project.git"
+  },
+  "author": "Artem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/owokequ/nodeJS-first-project/issues"
+  },
+  "homepage": "https://github.com/owokequ/nodeJS-first-project#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.2.1"
+  }
+}
