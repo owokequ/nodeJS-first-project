@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    /* Основные настройки */
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+
+    /* Настройки для Node.js */
+    "types": ["node"],
+    "lib": ["ES2022"],
+
+    /* Дополнительные фичи */
+    "sourceMap": false,
+    "declaration": false,
+    "allowJs": true,
+    "checkJs": true,
+    
+    /* Безопасность */
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.test.ts"]
+}
