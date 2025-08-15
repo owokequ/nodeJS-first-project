@@ -10,12 +10,11 @@ var LoggerService = /** @class */ (function () {
         });
     }
     LoggerService.prototype.log = function () {
-        var _a;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        (_a = this.logger).info.apply(_a, args);
+        this.logger.info(args);
     };
     LoggerService.prototype.error = function () {
         var _a;

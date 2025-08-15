@@ -7,9 +7,10 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "strictBindCallApply": false,
 
     /* Настройки для Node.js */
-    "types": ["node", "tslog"],
+    "types": ["node", "tslog", "express"],
     "lib": ["ES2022"],
 
     /* Дополнительные фичи */
