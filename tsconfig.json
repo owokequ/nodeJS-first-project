@@ -9,7 +9,7 @@
     "skipLibCheck": true,
 
     /* Настройки для Node.js */
-    "types": ["node"],
+    "types": ["node", "tslog"],
     "lib": ["ES2022"],
 
     /* Дополнительные фичи */
