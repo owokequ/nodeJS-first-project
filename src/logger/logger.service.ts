@@ -15,6 +15,7 @@ export class LoggerService {
 
     public log(...args: unknown[]) {
         this.logger.info(...args);
+
     }
 
     public error(...args: unknown[]) {
