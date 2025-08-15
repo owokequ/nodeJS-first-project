@@ -43,9 +43,10 @@ exports.App = void 0;
 var express_1 = __importDefault(require("express"));
 var users_js_1 = require("./users/users.js");
 var App = /** @class */ (function () {
-    function App() {
+    function App(logger) {
         this.app = (0, express_1.default)();
         this.port = 8000;
+        this.logger = logger;
     }
     App.prototype.useRouter = function () {
         this.app.use('/users', users_js_1.userRouter);
@@ -55,7 +56,7 @@ var App = /** @class */ (function () {
             return __generator(this, function (_a) {
                 this.useRouter();
                 this.server = this.app.listen(this.port);
-                console.log("Server create on http://localhost:".concat(this.port));
+                this.logger.log("Server create on http://localhost:".concat(this.port));
                 return [2 /*return*/];
             });
         });

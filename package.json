@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/owokequ/nodeJS-first-project#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "tslog": "^4.9.3"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",

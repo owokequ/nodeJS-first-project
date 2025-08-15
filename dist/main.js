@@ -37,13 +37,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var app_js_1 = require("./app.js");
+var logger_service_js_1 = require("./logger/logger.service.js");
 function bootstrap() {
     return __awaiter(this, void 0, void 0, function () {
         var app;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    app = new app_js_1.App();
+                    app = new app_js_1.App(new logger_service_js_1.LoggerService());
                     return [4 /*yield*/, app.init()];
                 case 1:
                     _a.sent();
