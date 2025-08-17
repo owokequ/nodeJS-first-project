@@ -41,15 +41,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.App = void 0;
 var express_1 = __importDefault(require("express"));
-var users_js_1 = require("./users/users.js");
 var App = /** @class */ (function () {
-    function App(logger) {
+    function App(logger, userController) {
         this.app = (0, express_1.default)();
         this.port = 8000;
         this.logger = logger;
+        this.userController = userController;
     }
     App.prototype.useRouter = function () {
-        this.app.use('/users', users_js_1.userRouter);
+        this.app.use('/users', this.userController.router);
     };
     App.prototype.init = function () {
         return __awaiter(this, void 0, void 0, function () {

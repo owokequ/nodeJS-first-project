@@ -3,7 +3,6 @@ import { Logger, ILogObj } from "tslog";
 
 export class LoggerService {
     private logger: Logger<ILogObj>;
-
     constructor() {
         const loggerTemplate =
         "{{yyyy}}-{{mm}}-{{dd}} {{hh}}:{{MM}}:{{ss}} {{logLevelName}}: ";
@@ -12,12 +11,9 @@ export class LoggerService {
         prettyLogTemplate: loggerTemplate,
         });
     }
-
     public log(...args: unknown[]) {
         this.logger.info(...args);
-
     }
-
     public error(...args: unknown[]) {
         this.logger.error(...args);
     }
