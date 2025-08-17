@@ -16,6 +16,16 @@ var BaseController = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    BaseController.prototype.created = function (res) {
+        return res.status(201);
+    };
+    BaseController.prototype.send = function (res, code, message) {
+        res.type('application/json');
+        return res.status(201).json(message);
+    };
+    BaseController.prototype.ok = function (res, message) {
+        return this.send(res, 200, message);
+    };
     BaseController.prototype.bindRoutes = function (routes) {
         for (var _i = 0, routes_1 = routes; _i < routes_1.length; _i++) {
             var route = routes_1[_i];
