@@ -1,29 +1,54 @@
 {
-  "name": "node_first_project",
-  "version": "1.0.0",
-  "description": "API для учебного проекта",
-  "main": "app.js",
-  "type": "commonjs",
-  "scripts": {
-    "start": "node ./dist/main.js",
-    "build": "tsc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/owokequ/nodeJS-first-project.git"
-  },
-  "author": "Artem",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/owokequ/nodeJS-first-project/issues"
-  },
-  "homepage": "https://github.com/owokequ/nodeJS-first-project#readme",
-  "dependencies": {
-    "express": "^5.1.0",
-    "tslog": "^4.9.3"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.3",
-    "@types/node": "^24.2.1"
-  }
+	"name": "node_first_project",
+	"version": "1.0.0",
+	"description": "API для учебного проекта",
+	"main": "app.js",
+	"type": "commonjs",
+	"scripts": {
+		"dev": "nodemon ./src/main.ts",
+		"start": "node ./dist/main.js",
+		"build": "tsc",
+		"lint": "eslint ./src/**",
+		"format": "prettier --write .",
+		"dev:inspect": "nodemon -e ts,json --exec node --inspect=localhost:9229 -r ts-node/register src/main.ts"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/owokequ/nodeJS-first-project.git"
+	},
+	"author": "Artem",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/owokequ/nodeJS-first-project/issues"
+	},
+	"homepage": "https://github.com/owokequ/nodeJS-first-project#readme",
+	"dependencies": {
+		"bcryptjs": "^3.0.2",
+		"body-parser": "^2.2.0",
+		"class-transformer": "^0.5.1",
+		"class-validator": "^0.14.2",
+		"express": "^5.1.0",
+		"inversify": "^7.8.1",
+		"reflect-metadata": "^0.2.2",
+		"tslog": "^4.9.3"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.33.0",
+		"@types/bcrypt": "^6.0.0",
+		"@types/bcryptjs": "^2.4.6",
+		"@types/express": "^5.0.3",
+		"@types/node": "^24.3.0",
+		"@typescript-eslint/eslint-plugin": "^8.39.1",
+		"@typescript-eslint/parser": "^8.39.1",
+		"eslint": "^9.33.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-prettier": "^5.5.4",
+		"globals": "^16.3.0",
+		"jiti": "^2.5.1",
+		"nodemon": "^3.1.10",
+		"prettier": "^3.6.2",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.9.2",
+		"typescript-eslint": "^8.39.1"
+	}
 }

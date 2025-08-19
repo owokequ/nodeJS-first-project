@@ -1,36 +1,44 @@
-import express, {Express, Router} from 'express'
+import express, { Express, Router } from 'express';
 import { Server } from 'http';
-import { LoggerService } from './logger/logger.service.js';
-import { UserController } from './users/users.controller.js';
-import { IControllerRoute } from './common/route.interface.js';
+import { UserController } from './users/users.controller';
+import { ExceptionFilter } from './errors/exception.filter';
+import { ILogger } from './logger/logger.interface';
+import { inject, injectable } from 'inversify';
+import { TYPES } from './type';
+import { json } from 'body-parser'
+import 'reflect-metadata';
 
+@injectable()
 export class App {
-    app: Express;
-    server?: Server;
-    port: number;
-    logger: LoggerService;
-    userController: UserController
+	app: Express;
+	server?: Server;
+	port: number;
 
+	constructor(
+		@inject(TYPES.ILogger) private logger: ILogger,
+		@inject(TYPES.IUserController) private userController: UserController,
+		@inject(TYPES.ExceptionFilter) private ExceptionFilter: ExceptionFilter,
+	) {
+		this.app = express();
+		this.port = 8000;
+	}
 
-    constructor(logger: LoggerService,
-        userController: UserController
-        ){
-        this.app = express()
+	useMiddleware(): void {
+        this.app.use(json())
+	}
+	useRouter(): void {
+		this.app.use('/users', this.userController.router);
+	}
 
-        this.port = 8000;
-        this.logger = logger;
-        this.userController = userController
-    }
+	useExceptionFilters(): void {
+		this.app.use(this.ExceptionFilter.catch.bind(this.ExceptionFilter));
+	}
 
-    useRouter(){
-        this.app.use('/users', this.userController.router)
-
-    }
-
-    public async init(){
-        this.useRouter();
-        this.server = this.app.listen(this.port)
-        this.logger.log(`Server create on http://localhost:${this.port}`);
-        
-    }
+	public async init(): Promise<void> {
+        this.useMiddleware()
+		this.useRouter();
+		this.useExceptionFilters();
+		this.server = this.app.listen(this.port);
+		this.logger.log(`Server create on http://localhost:${this.port}`);
+	}
 }

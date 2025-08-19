@@ -1,29 +1,34 @@
 {
-  "compilerOptions": {
-    /* Основные настройки */
-    "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "strictBindCallApply": false,
+	"compilerOptions": {
+		/* Основные настройки */
+		"module": "commonjs",
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"strictBindCallApply": false,
+		"useDefineForClassFields": false,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"moduleResolution": "node",
 
-    /* Настройки для Node.js */
-    "types": ["node", "tslog", "express"],
-    "lib": ["ES2022"],
+		/* Настройки для Node.js */
+		"types": ["node", "tslog", "express"],
+		"lib": ["ES2022"],
+		"target": "es2022",
 
-    /* Дополнительные фичи */
-    "sourceMap": false,
-    "declaration": false,
-    "allowJs": true,
-    "checkJs": true,
-    
-    /* Безопасность */
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.test.ts"]
+		/* Дополнительные фичи */
+		"sourceMap": true,
+		"declaration": false,
+		"allowJs": true,
+		"checkJs": true,
+
+		/* Безопасность */
+		"noUncheckedIndexedAccess": true,
+		"noImplicitOverride": true,
+		"noPropertyAccessFromIndexSignature": true
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "**/*.test.ts"]
 }
