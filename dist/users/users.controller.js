@@ -18,31 +18,71 @@ const base_controller_1 = require("../common/base.controller");
 const http_error_class_1 = require("../errors/http-error.class");
 const type_1 = require("../type");
 require("reflect-metadata");
-const user_service_1 = require("./user.service");
-// import fs from 'fs';
-// import { join, resolve } from 'path';
+const user_login_dto_1 = require("./dto/user-login.dto");
+const user_register_dto_1 = require("./dto/user-register.dto");
+const validate_middleware_1 = require("../common/validate.middleware");
+const jsonwebtoken_1 = require("jsonwebtoken");
 const data = [];
 let UserController = class UserController extends base_controller_1.BaseController {
-    constructor(loggerService, userService) {
+    constructor(loggerService, userService, configService) {
         super(loggerService);
         this.loggerService = loggerService;
         this.userService = userService;
+        this.configService = configService;
         this.bindRoutes([
-            { path: '/login', method: 'post', func: this.login },
-            { path: '/register', method: 'post', func: this.register },
+            {
+                path: '/login',
+                method: 'post',
+                func: this.login,
+                middlewares: [new validate_middleware_1.ValidateMiddleware(user_login_dto_1.UserLoginDto)],
+            },
+            {
+                path: '/register',
+                method: 'post',
+                func: this.register,
+                middlewares: [new validate_middleware_1.ValidateMiddleware(user_register_dto_1.UserRegisterDto)],
+            },
+            {
+                path: '/info',
+                method: 'get',
+                func: this.info,
+                middlewares: [],
+            },
         ]);
     }
     routerUser() { }
-    login(req, res, next) {
-        console.log(req.body);
-        next(new http_error_class_1.HTTPError(401, 'ошибка авторизации', 'login'));
+    async login({ body }, res, next) {
+        const loginResult = await this.userService.validateUser(body);
+        if (!loginResult) {
+            return next(new http_error_class_1.HTTPError(401, 'ошибка авторизации', 'login'));
+        }
+        const jwt = await this.signJWT(body.email, this.configService.get('SECRET'));
+        this.ok(res, { jwt });
     }
     async register({ body }, res, next) {
         const result = await this.userService.createUser(body);
         if (!result) {
             return next(new http_error_class_1.HTTPError(422, 'Такой пользователь уже существует'));
         }
-        this.ok(res, { email: result.email });
+        this.ok(res, { email: result.email, id: result.id });
+    }
+    async info({ user }, res, next) {
+        this.ok(res, { email: user });
+    }
+    signJWT(email, secret) {
+        return new Promise((resolve, reject) => {
+            (0, jsonwebtoken_1.sign)({
+                email,
+                iat: Math.floor(Date.now() / 1000),
+            }, secret, {
+                algorithm: 'HS256',
+            }, (err, token) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(token);
+            });
+        });
     }
 };
 exports.UserController = UserController;
@@ -50,6 +90,7 @@ exports.UserController = UserController = __decorate([
     (0, inversify_1.injectable)(),
     __param(0, (0, inversify_1.inject)(type_1.TYPES.ILogger)),
     __param(1, (0, inversify_1.inject)(type_1.TYPES.UserService)),
-    __metadata("design:paramtypes", [Object, user_service_1.UserService])
+    __param(2, (0, inversify_1.inject)(type_1.TYPES.ConfigService)),
+    __metadata("design:paramtypes", [Object, Object, Object])
 ], UserController);
 //# sourceMappingURL=users.controller.js.map

@@ -18,21 +18,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.App = void 0;
 const express_1 = __importDefault(require("express"));
 const users_controller_1 = require("./users/users.controller");
-const exception_filter_1 = require("./errors/exception.filter");
 const inversify_1 = require("inversify");
 const type_1 = require("./type");
 const body_parser_1 = require("body-parser");
 require("reflect-metadata");
+const prisma_service_1 = require("./database/prisma.service");
+const auth_middleware_1 = require("./common/auth.middleware");
 let App = class App {
-    constructor(logger, userController, ExceptionFilter) {
+    constructor(logger, userController, ExceptionFilter, configService, prismaService) {
         this.logger = logger;
         this.userController = userController;
         this.ExceptionFilter = ExceptionFilter;
+        this.configService = configService;
+        this.prismaService = prismaService;
         this.app = (0, express_1.default)();
         this.port = 8000;
     }
     useMiddleware() {
         this.app.use((0, body_parser_1.json)());
+        const authMiddleware = new auth_middleware_1.AuthMiddleware(this.configService.get('SECRET'));
+        this.app.use(authMiddleware.execute.bind(authMiddleware));
     }
     useRouter() {
         this.app.use('/users', this.userController.router);
@@ -44,6 +49,7 @@ let App = class App {
         this.useMiddleware();
         this.useRouter();
         this.useExceptionFilters();
+        await this.prismaService.connect();
         this.server = this.app.listen(this.port);
         this.logger.log(`Server create on http://localhost:${this.port}`);
     }
@@ -54,7 +60,8 @@ exports.App = App = __decorate([
     __param(0, (0, inversify_1.inject)(type_1.TYPES.ILogger)),
     __param(1, (0, inversify_1.inject)(type_1.TYPES.IUserController)),
     __param(2, (0, inversify_1.inject)(type_1.TYPES.ExceptionFilter)),
-    __metadata("design:paramtypes", [Object, users_controller_1.UserController,
-        exception_filter_1.ExceptionFilter])
+    __param(3, (0, inversify_1.inject)(type_1.TYPES.ConfigService)),
+    __param(4, (0, inversify_1.inject)(type_1.TYPES.PrismaService)),
+    __metadata("design:paramtypes", [Object, users_controller_1.UserController, Object, Object, prisma_service_1.PrismaService])
 ], App);
 //# sourceMappingURL=app.js.map
